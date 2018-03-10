@@ -32,7 +32,6 @@ graph build_graph(long* costs, long* populations, long num_clients, long num_cen
       G.nodes[center_index].excess = - (capacity + (j < remainder? 1 : 0));
       G.nodes[center_index].first = G.arcs + G.m + j*num_clients;
     }
-    int c = 0;
     for (long i=0; i < num_clients; ++i){
       G.nodes[i].excess = populations[i];
       G.nodes[i].first = G.arcs + i*num_centers;
