@@ -17,9 +17,8 @@ CPPFLAGS = -O3 -Wall -std=c++1z
 #CFLAGS = -O4 -DNDEBUG -DNO_ZERO_CYCLES
 BIN=cs2 do_redistrict test_initial_centers test_redistrict test_find_weights
 
-cs2.exe: cs2.c types_cs2.h timer.c assignment.hpp
-#	$(CCOMP) $(CFLAGS) -o $(BIN) cs2.c -lm
-	$(CCOMP) $(CFLAGS) -DPRINT_ANS -DCOMP_DUALS -DCOST_RESTART -o $(BIN) cs2.c -lm
+do_redistrict: do_redistrict.o redistrict.o initial_centers.o  mincostflow.o check_weights.o rand_point.o rand_float.o point.o print_out_solution.o
+	$(CCOMP) $(CPPFLAGS) do_redistrict.o redistrict.o initial_centers.o mincostflow.o check_weights.o rand_point.o point.o print_out_solution.o rand_float.o -o do_redistrict
 
 clean:
 	rm -f $(BIN) *.o *~
