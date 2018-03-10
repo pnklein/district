@@ -21,14 +21,6 @@
 #include "build_graph.h"
 #include "mincostflow.hpp"
 
-/* function 'timer()' for measuring processor time */
-
-#ifdef WINDOWS_TIMER
-#include "winTimer.c"
-#else
-#include "timer.c"
-#endif
-
 #define N_NODE( i ) ( ( (i) == NULL ) ? -1 : ( (i) - ndp + nmin ) )
 #define N_ARC( a ) ( ( (a) == NULL )? -1 : (a) - arp )
 
@@ -351,8 +343,6 @@ void cs_init (long n_p, long m_p, node *nodes_p, arc *arcs_p,
 {
 node   *i;          /* current node */
 arc    *a;          /* current arc */
-arc    *a_stop;
-long   df;
 bucket *b;          /* current bucket */
 
 n             = n_p;
@@ -1894,8 +1884,7 @@ void foo() {
 
 //weights is a vector whose size is number of centers
 
-int find_assignment(long * costs, long * populations, int num_clients, int num_centers, Assignment &assignment, std::vector<long> & weights){
-  double t;
+void find_assignment(long * costs, long * populations, int num_clients, int num_centers, Assignment &assignment, std::vector<long> & weights){
   arc *arp;
   node *ndp;
   long n, m, m2, nmin; 
@@ -1939,23 +1928,8 @@ int find_assignment(long * costs, long * populations, int num_clients, int num_c
   m2 = 2 * m;
   //  printf ("c nodes: %15ld     arcs:  %15ld\n", n, m ); 
   
-  t = timer();
   cs2 ( n, m2, ndp, arp, f_sc, c_max, cap, &cost );
-  t = timer() - t;
   
-  
-  //  printf ("c time:  %15.2f     cost:  %15.0f\n", t, cost);
-  
-  /* printf ("c refines:    %10ld     discharges: %10ld\n", */
-  /* 	  n_refine, n_discharge); */
-  /* printf ("c pushes:     %10ld     relabels:   %10ld\n", */
-  /* 	  n_push, n_relabel); */
-  /* printf ("c updates:    %10ld     u-scans:    %10ld\n", */
-  /* 	  n_update, n_scan); */
-  /* printf ("c p-refines:  %10ld     r-scans:    %10ld\n", */
-  /* 	  n_prefine, n_prscan); */
-  /* printf ("c dfs-scans:  %10ld     bad-in:     %4ld  + %2ld\n", */
-  /* 	  n_prscan1, n_bad_pricein, n_bad_relabel); */
   
 #ifdef CHECK_SOLUTION
   printf("c checking feasibility...\n"); 
