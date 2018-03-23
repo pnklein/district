@@ -11,6 +11,7 @@
 #include <string.h>
 #include <assert.h>
 #include "check_weights.hpp"
+#include <limits>
 
 //#include <values.h>
 
