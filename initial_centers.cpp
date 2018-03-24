@@ -12,6 +12,7 @@ vector<Point> choose_initial_centers(const vector<Point> &clients, long * popula
   long population = accumulate(populations, populations+clients.size(), 0);
   long r = rand() % population;
   vector<Point> centers(num_centers);
+  
   for (int i=0; i < clients.size(); ++i){
     r -= populations[i];
     if (r <= 0) {
@@ -19,6 +20,7 @@ vector<Point> choose_initial_centers(const vector<Point> &clients, long * popula
       break;
     }
   }
+
   vector<double> distances_sq(clients.size(), numeric_limits<double>::infinity());
   double weighted_sum_dist_sq = 0.;
   for (int j = 1; j < centers.size(); ++j){
@@ -30,10 +32,11 @@ vector<Point> choose_initial_centers(const vector<Point> &clients, long * popula
     for (int i = 0; i < clients.size(); ++i) {
       choice -= distances_sq[i]*populations[i];
       if (choice <= 0){
-	centers[j] = clients[j];
-	break;
+        centers[j] = clients[j];
+        break;
       }
     }
   }
+  
   return centers;
 }
