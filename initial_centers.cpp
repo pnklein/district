@@ -7,9 +7,11 @@
 
 using namespace std;
 
-vector<Point> choose_initial_centers(const vector<Point> &clients, long * populations, int num_centers){
-  vector<int> rand_values(clients.size());
-  long population = accumulate(populations, populations+clients.size(), 0);
+std::vector<Point> choose_initial_centers(
+  const std::vector<Point> &clients, 
+  const long *const populations, 
+  int num_centers
+){
   long r = rand() % population;
   vector<Point> centers(num_centers);
   
