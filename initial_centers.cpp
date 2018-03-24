@@ -12,6 +12,7 @@ std::vector<Point> choose_initial_centers(
   const long *const populations, 
   int num_centers
 ){
+  const long population = std::accumulate(populations, populations+clients.size(), 0);
   long r = rand() % population;
   vector<Point> centers(num_centers);
   
