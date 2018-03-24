@@ -34,7 +34,7 @@ std::vector<Point> choose_initial_centers(
       weighted_sum_dist_sq += distances_sq[i]*populations[i];
     }
     double choice = rand_float(0, weighted_sum_dist_sq);
-    for (int i = 0; i < clients.size(); ++i) {
+    for (unsigned int i = 0; i < clients.size(); ++i) {
       choice -= distances_sq[i]*populations[i];
       if (choice <= 0){
         centers[j] = clients[j];
