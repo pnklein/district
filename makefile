@@ -11,8 +11,8 @@ CCOMP = g++-7
 #CCOMP = gcc-4
 #CFLAGS = -g -DCHECK_SOLUTION -Wall
 DEBUG = -g 
-CFLAGS = -O3 -Wall 
-CPPFLAGS = -O3 -Wall -std=c++1z
+CFLAGS = -O3 -Wall -g
+CPPFLAGS = -O3 -Wall -std=c++1z -g
 #CPPFLAGS = -g -Wall -std=c++1z
 #CFLAGS = -O4 -DNDEBUG -DNO_ZERO_CYCLES
 BIN=cs2 do_redistrict test_initial_centers test_redistrict test_find_weights
