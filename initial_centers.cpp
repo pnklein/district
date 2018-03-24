@@ -14,12 +14,14 @@ std::vector<Point> choose_initial_centers(
 ){
   const long population = std::accumulate(populations, populations+clients.size(), 0);
   long r = rand() % population;
-  vector<Point> centers(num_centers);
+  std::vector<Point> centers(num_centers);
   
-  for (int i=0; i < clients.size(); ++i){
+  //Choose a random initial centroid from the list of population points
+  //weighting each one's probability of being chosen by its population
+  for (unsigned int i=0; i < clients.size(); ++i){
     r -= populations[i];
     if (r <= 0) {
-      centers[0] = clients[i];
+      centers.at(0) = clients[i];
       break;
     }
   }
