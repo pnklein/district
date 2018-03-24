@@ -877,13 +877,7 @@ void refine ()
 node     *i;      /* current node */
 excess_t i_exc;   /* excess of  i  */
 
-long   np, nr, ns;  /* variables for additional print */
-
 int    pr_in_int;   /* current number of updates between price_in */
-
-np = n_push; 
-nr = n_relabel; 
-ns = n_scan;
 
 n_refine ++;
 n_ref ++;
