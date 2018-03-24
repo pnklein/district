@@ -5,8 +5,6 @@
 #include "rand_float.hpp"
 #include "rand_point.hpp"
 
-using namespace std;
-
 std::vector<Point> choose_initial_centers(
   const std::vector<Point> &clients, 
   const long *const populations, 
@@ -26,11 +24,11 @@ std::vector<Point> choose_initial_centers(
     }
   }
 
-  vector<double> distances_sq(clients.size(), numeric_limits<double>::infinity());
+  std::vector<double> distances_sq(clients.size(), std::numeric_limits<double>::infinity());
   double weighted_sum_dist_sq = 0.;
-  for (int j = 1; j < centers.size(); ++j){
-    for (int i = 1; i < clients.size(); ++i){
-      distances_sq[i] = min(distances_sq[i], centers[j-1].dist_sq(clients[i]));
+  for (unsigned int j = 1; j < centers.size(); ++j){
+    for (unsigned int i = 1; i < clients.size(); ++i){
+      distances_sq[i] = std::min(distances_sq[i], centers[j-1].dist_sq(clients[i]));
       weighted_sum_dist_sq += distances_sq[i]*populations[i];
     }
     double choice = rand_float(0, weighted_sum_dist_sq);
