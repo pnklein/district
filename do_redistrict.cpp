@@ -1,11 +1,14 @@
 #include <iostream>
 #include <fstream>
+#include <time.h>
 #include "redistrict.hpp"
 #include "print_out_solution.hpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]){
+  srand(time(NULL));
+
   int num_centers = atoi(argv[1]);
   //  string client_filename = argv[2];
   std::ifstream inf(argv[2]);
