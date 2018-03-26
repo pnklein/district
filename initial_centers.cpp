@@ -20,8 +20,8 @@ vector<Point> choose_initial_centers(const vector<Point> &clients, long * popula
     }
   }
   vector<double> distances_sq(clients.size(), numeric_limits<double>::infinity());
-  double weighted_sum_dist_sq = 0.;
   for (int j = 1; j < centers.size(); ++j){
+    double weighted_sum_dist_sq = 0.;
     for (int i = 1; i < clients.size(); ++i){
       distances_sq[i] = min(distances_sq[i], centers[j-1].dist_sq(clients[i]));
       weighted_sum_dist_sq += distances_sq[i]*populations[i];
