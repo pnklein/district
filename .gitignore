@@ -1,1 +1,3 @@
 *.o
+do_redistrict
+out_*
