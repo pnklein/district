@@ -91,9 +91,12 @@ if __name__ == '__main__':
         print("Use: ", sys.argv[0], "[voronoi boundary file] [state boundary file]")
         exit(-1)
 
-    C_3D, A, polygons, bbox = Parse(sys.argv[1])
+    voronoi_file   = sys.argv[1]
+    state_boundary = sys.argv[2]
 
-    boundary = Parse_boundary(sys.argv[2])
+    C_3D, A, polygons, bbox = Parse(voronoi_file)
+
+    boundary = Parse_boundary(state_boundary)
 
     clipped_polygons = clip(polygons, boundary)
 
