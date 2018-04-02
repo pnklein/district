@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import scipy.spatial as sp
 import shapely.geometry as sg
 from shapely.geometry.polygon import Polygon
+import shapely.ops 
 import shapely.wkt
 from matplotlib import colors as mcolors
 
@@ -75,15 +77,15 @@ def Parse(filename):
     return C,A,polygons,[[x_min,y_min],[x_max,y_max]]
 
 def clip(polygons, boundary):
-    clipped = polygons
     new_clipped = []
-    for b in boundary:
-        for i in range(len(polygons)):
-            p = polygons[i]
+    for p in polygons:
+        new_poly = []
+        for b in boundary:
             if b.contains(p):
-                new_clipped.append(p)
+                new_poly.append(p)
             elif p.intersects(b) :
-                new_clipped.append(p.intersection(b))
+                new_poly.append(p.intersection(b))
+        new_clipped.append(shapely.ops.cascaded_union(new_poly))
     return new_clipped
     
 if __name__ == '__main__':
