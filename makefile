@@ -10,7 +10,7 @@
 #CFLAGS = -g -DCHECK_SOLUTION -Wall
 DEBUG = -g 
 CFLAGS = -O3 -Wall -g
-CPPFLAGS = -O3 -Wall -std=c++1z -g
+CPPFLAGS = -O3 -Wall -std=c++11 -g
 #CPPFLAGS = -g -Wall -std=c++1z
 #CFLAGS = -O4 -DNDEBUG -DNO_ZERO_CYCLES
 BIN=cs2 do_redistrict.exe test_initial_centers.exe test_redistrict.exe test_find_weights

@@ -18,13 +18,19 @@
 
 using namespace std;
 
-tuple<vector<Point>, Assignment, vector<double> > choose_centers(const vector<Point> &clients, long * populations, int num_centers){
+void choose_centers(
+  const vector<Point> &clients,
+  long * populations,
+  int num_centers,
+  std::vector<Point> &centers,
+  Assignment &assignment,
+  std::vector<double> &weights
+){
   long * costs = (long *) calloc(clients.size() * num_centers, sizeof(long));
   vector<double> distances_sq(clients.size()*num_centers, numeric_limits<double>::infinity());
   double max_dist_sq = 0;
-  Assignment assignment(clients.size());
+  assignment.resize(clients.size());
   Assignment old_assignment(clients.size());
-  vector<Point> centers;
   vector<long> int_weights(num_centers);
   
   bool different;
@@ -81,10 +87,10 @@ tuple<vector<Point>, Assignment, vector<double> > choose_centers(const vector<Po
     if (different){
       cerr << "FAILURE TO CONVERGE\n";
     } else {
-      vector<double> weights(int_weights.size());
+      weights.resize(int_weights.size());
       transform(int_weights.begin(), int_weights.end(), weights.begin(), [scale](long w){return ((double) w)/scale;});
       check_weights(clients, centers, assignment, weights);
-      return make_tuple(centers, assignment, weights);
+      return;
     }
   }
 

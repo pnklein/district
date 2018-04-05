@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <time.h>
+#include "assignment.hpp"
 #include "redistrict.hpp"
 #include "print_out_solution.hpp"
 
@@ -22,7 +23,13 @@ int main(int argc, char *argv[]){
       populations_vec.push_back(population);
     }
   }
-  auto [centers, assignment, weights ] = choose_centers(clients, &populations_vec[0], num_centers);
+
+  std::vector<Point> centers;
+  Assignment assignment;
+  std::vector<double> weights;
+
+  choose_centers(clients, &populations_vec[0], num_centers, centers, assignment, weights);
+
   if (centers.size() == 0){
     cout << "FAILURE TO CONVERGE\n";
     return -1;
