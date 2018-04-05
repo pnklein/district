@@ -5,6 +5,9 @@ if [ "$#" -ne 5 ]; then
   exit 1
 fi
 
+#Get the script's directory
+dir=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
+
 pop_file=$1
 state_name=$2
 state_shapefile=$3
@@ -19,19 +22,19 @@ temp_out_voronoi="temp_voronoi_boundary_${state_name}_${rand_str}"
 temp_out_gnuplot="temp_gnuplot_${state_name}_${rand_str}"
 
 echo "Reading census blocks..."
-python3 read_census_blocks.py $pop_file $temp_out_pop
+python3 $dir/read_census_blocks.py $pop_file $temp_out_pop
 
 echo "Reading state boundaries..."
-python3 read_state_shapefile.py $state_name $state_shapefile > $temp_out_state
+python3 $dir/read_state_shapefile.py $state_name $state_shapefile > $temp_out_state
 
 echo "Generating power diagram..."
-./do_redistrict $district_num $temp_out_pop > $temp_out_power
+$dir/do_redistrict $district_num $temp_out_pop > $temp_out_power
 
 echo "Generating Voronoi boundaries..."
-python3 Voronoi_boundaries.py $temp_out_power $temp_out_voronoi
+python3 $dir/Voronoi_boundaries.py $temp_out_power $temp_out_voronoi
 
 echo "Extracting districting boundaries..."
-python3 extract_district_boundaries.py $temp_out_voronoi $temp_out_state > "$output_name"
+python3 $dir/extract_district_boundaries.py $temp_out_voronoi $temp_out_state > "$output_name"
 #python3 plotGNUPlot.py $temp_out_voronoi $temp_out_state $temp_out_gnuplot False
 #gnuplot < $temp_out_gnuplot
 
