@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 import numpy as np
-import matplotlib.pyplot as plt
 import sys
 import scipy.spatial as sp
 import shapely.geometry as sg
 from shapely.geometry.polygon import Polygon
 import shapely.ops 
 import shapely.wkt
-from matplotlib import colors as mcolors
 
 def Parse_boundary(filename):
     f = open(filename, "r")
