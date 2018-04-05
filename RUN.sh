@@ -28,7 +28,7 @@ echo "Reading state boundaries..."
 python3 $dir/read_state_shapefile.py $state_name $state_shapefile > $temp_out_state
 
 echo "Generating power diagram..."
-$dir/do_redistrict $district_num $temp_out_pop > $temp_out_power
+$dir/do_redistrict.exe $district_num $temp_out_pop > $temp_out_power
 
 echo "Generating Voronoi boundaries..."
 python3 $dir/Voronoi_boundaries.py $temp_out_power $temp_out_voronoi
