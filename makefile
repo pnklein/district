@@ -13,10 +13,10 @@ CFLAGS = -O3 -Wall -g
 CPPFLAGS = -O3 -Wall -std=c++1z -g
 #CPPFLAGS = -g -Wall -std=c++1z
 #CFLAGS = -O4 -DNDEBUG -DNO_ZERO_CYCLES
-BIN=cs2 do_redistrict test_initial_centers test_redistrict test_find_weights
+BIN=cs2 do_redistrict.exe test_initial_centers.exe test_redistrict.exe test_find_weights
 
-do_redistrict: do_redistrict.o redistrict.o initial_centers.o  mincostflow.o check_weights.o rand_point.o rand_float.o point.o print_out_solution.o
-	$(CXX) $(CPPFLAGS) do_redistrict.o redistrict.o initial_centers.o mincostflow.o check_weights.o rand_point.o point.o print_out_solution.o rand_float.o -o do_redistrict
+do_redistrict.exe: do_redistrict.o redistrict.o initial_centers.o  mincostflow.o check_weights.o rand_point.o rand_float.o point.o print_out_solution.o
+	$(CXX) $(CPPFLAGS) do_redistrict.o redistrict.o initial_centers.o mincostflow.o check_weights.o rand_point.o point.o print_out_solution.o rand_float.o -o do_redistrict.exe
 
 clean:
 	rm -f $(BIN) *.o *~
@@ -36,8 +36,8 @@ initial_centers.o: initial_centers.cpp initial_centers.hpp
 test_initial_centers.o: test_initial_centers.cpp initial_centers.hpp
 	$(CXX) $(CPPFLAGS) -c test_initial_centers.cpp
 
-test_initial_centers: test_initial_centers.o initial_centers.o point.o
-	$(CXX) $(CPPFLAGS) test_initial_centers.o initial_centers.o point.o -o test_initial_centers
+test_initial_centers.exe: test_initial_centers.o initial_centers.o point.o
+	$(CXX) $(CPPFLAGS) test_initial_centers.o initial_centers.o point.o -o test_initial_centers.exe
 
 mincostflow.o: mincostflow.cpp mincostflow.hpp build_graph.h types_cs2.h assignment.hpp
 	$(CXX) $(CFLAGS) -c mincostflow.cpp
@@ -54,8 +54,8 @@ test_redistrict.o: test_redistrict.cpp redistrict.hpp rand_point.hpp
 do_redistrict.o: do_redistrict.cpp redistrict.hpp
 	$(CXX) $(CPPFLAGS) -c do_redistrict.cpp
 
-test_redistrict: test_redistrict.o redistrict.o initial_centers.o  mincostflow.o check_weights.o point.o rand_point.o rand_float.o
-	$(CXX) $(CPPFLAGS) test_redistrict.o redistrict.o initial_centers.o mincostflow.o check_weights.o rand_point.o point.o rand_float.o -o test_redistrict
+test_redistrict.exe: test_redistrict.o redistrict.o initial_centers.o  mincostflow.o check_weights.o point.o rand_point.o rand_float.o
+	$(CXX) $(CPPFLAGS) test_redistrict.o redistrict.o initial_centers.o mincostflow.o check_weights.o rand_point.o point.o rand_float.o -o test_redistrict.exe
 
 do_redistrict: do_redistrict.o redistrict.o initial_centers.o  mincostflow.o check_weights.o rand_point.o rand_float.o point.o print_out_solution.o
 	$(CXX) $(CPPFLAGS) do_redistrict.o redistrict.o initial_centers.o mincostflow.o check_weights.o rand_point.o point.o print_out_solution.o rand_float.o -o do_redistrict
@@ -68,8 +68,8 @@ find_weights.o: find_weights.cpp find_weights.hpp
 test_find_weights.o: test_find_weights.cpp find_weights.hpp
 	$(CXX) $(CPPFLAGS) -c test_find_weights.cpp
 
-test_find_weights: test_find_weights.o find_weights.o point.o
-	$(CXX) $(CPPFLAGS) test_find_weights.o find_weights.o point.o -o test_find_weights
+test_find_weights.exe: test_find_weights.o find_weights.o point.o
+	$(CXX) $(CPPFLAGS) test_find_weights.o find_weights.o point.o -o test_find_weights.exe
 
 test_mincostflow.o: test_mincostflow.cpp mincostflow.hpp
 	$(CXX) $(CPPFLAGS) -c test_mincostflow.cpp
