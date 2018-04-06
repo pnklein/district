@@ -22,7 +22,10 @@ where
  * `<State Name>` is the FIPS code of the state to be processed. In this example, this is `44`.
  * `<States Outline>` is the name of a state boundary shapefile. This is a file like `cb_2016_us_state_500k` (see below).
  * `<District Num>` is the number of districts to generate
- * `<Output Name>` is the name of the output file. Output will a representation of the districts in well-known text (WKT) format.
+ * `<Output Name>` is the name of the output file.
+
+Output will a representation of the districts in well-known text (WKT) format.
+This is suitable for interoperation with many standard GIS programs.
 
 
 
