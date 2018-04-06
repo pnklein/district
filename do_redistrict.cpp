@@ -10,6 +10,11 @@ using namespace std;
 int main(int argc, char *argv[]){
   srand(time(NULL));
 
+  if(argc!=3){
+    cout<<"Syntax: "<<argv[0]<<"<Number of Districts> <Population Data>"<<std::endl;
+    return -1;
+  }
+
   int num_centers = atoi(argv[1]);
   //  string client_filename = argv[2];
   std::ifstream inf(argv[2]);
