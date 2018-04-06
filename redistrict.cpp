@@ -82,7 +82,7 @@ void choose_centers(
         Point new_center = new_centers[j].scale(1./center2num_clients[j]);
         centers[j] = new_center;
       }
-    } while (different and iter_count < 5*num_centers);
+    } while (different and iter_count < 10*num_centers);
 
     if (different){
       cerr << "FAILURE TO CONVERGE\n";
