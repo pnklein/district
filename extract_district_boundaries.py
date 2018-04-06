@@ -79,10 +79,12 @@ def clip(polygons, boundary):
     for p in polygons:
         new_poly = []
         for b in boundary:
-            if b.contains(p):
-                new_poly.append(p)
-            elif p.intersects(b) :
-                new_poly.append(p.intersection(b))
+            pclean = p.buffer(0)
+            bclean = b.buffer(0)
+            if blcean.contains(pclean):
+                new_poly.append(pclean)
+            elif pclean.intersects(blcean) :
+                new_poly.append(pclean.intersection(blcean))
         new_clipped.append(shapely.ops.cascaded_union(new_poly))
     return new_clipped
     
