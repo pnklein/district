@@ -1,11 +1,33 @@
 Balanced Centroidal Power Diagram Redistricting
 ===============================================
 
+Compilation
+-----------
+
+Compile the code by running:
+
+    make
+
+
+Running the Code: Short Version
+-------------------------------
+
+The code can be run using:
+
+    ./RUN.sh <Population File> <State Name> <States Outline> <District Num> <Output Name>
+
+where
+
+ * `<Population File>` is a census block shapefile. These have names like `tabblock2010_44_pophu` (see below).
+ * `<State Name>` is the FIPS code of the state to be processed. In this example, this is `44`.
+ * `<States Outline>` is the name of a state boundary shapefile. This is a file like `cb_2016_us_state_500k` (see below).
+ * `<District Num>` is the number of districts to generate
+ * `<Output Name>` is the name of the output file. Output will a representation of the districts in well-known text (WKT) format.
 
 
 
-
-
+Running the Code: Long Version
+------------------------------
 
 Extract census blocks and populations
 
