@@ -1,5 +1,6 @@
 #include "rand_float.hpp"
+#include "random.hpp"
 
 double rand_float(double lower, double upper){
-  return lower + static_cast<double>(rand()) / static_cast<double>(RAND_MAX/(upper-lower));
+  return uniform_rand_real(lower, upper);
 }

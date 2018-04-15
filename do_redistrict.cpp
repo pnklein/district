@@ -1,14 +1,14 @@
 #include <iostream>
 #include <fstream>
-#include <time.h>
 #include "assignment.hpp"
+#include "random.hpp"
 #include "redistrict.hpp"
 #include "print_out_solution.hpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]){
-  srand(time(NULL));
+  seed_rand(0);
 
   if(argc!=3){
     cout<<"Syntax: "<<argv[0]<<" <Number of Districts> <Population Data>"<<std::endl;

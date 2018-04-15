@@ -15,8 +15,8 @@ CPPFLAGS = -O3 -Wall -std=c++11 -g -flto
 #CFLAGS = -O4 -DNDEBUG -DNO_ZERO_CYCLES
 BIN=cs2 do_redistrict.exe test_initial_centers.exe test_redistrict.exe test_find_weights
 
-do_redistrict.exe: do_redistrict.o redistrict.o initial_centers.o  mincostflow.o check_weights.o rand_point.o rand_float.o point.o print_out_solution.o
-	$(CXX) $(CPPFLAGS) do_redistrict.o redistrict.o initial_centers.o mincostflow.o check_weights.o rand_point.o point.o print_out_solution.o rand_float.o -o do_redistrict.exe
+do_redistrict.exe: do_redistrict.o redistrict.o initial_centers.o  mincostflow.o check_weights.o rand_point.o rand_float.o point.o print_out_solution.o random.o
+	$(CXX) $(CPPFLAGS) do_redistrict.o redistrict.o initial_centers.o mincostflow.o check_weights.o rand_point.o point.o print_out_solution.o rand_float.o random.o -o do_redistrict.exe
 
 clean:
 	rm -f $(BIN) *.o *~
@@ -29,6 +29,9 @@ point.o: point.cpp point.hpp
 
 rand_point.o: rand_point.cpp rand_point.hpp
 	$(CXX) $(CPPFLAGS) -c rand_point.cpp
+
+random.o: random.cpp random.hpp
+	$(CXX) $(CPPFLAGS) -c random.cpp
 
 initial_centers.o: initial_centers.cpp initial_centers.hpp
 	$(CXX) $(CPPFLAGS) -c initial_centers.cpp
