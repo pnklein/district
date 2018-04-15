@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import shapefile
 from shapely.geometry import shape
 import sys
