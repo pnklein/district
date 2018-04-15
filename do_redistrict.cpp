@@ -11,7 +11,7 @@ int main(int argc, char *argv[]){
   srand(time(NULL));
 
   if(argc!=3){
-    cout<<"Syntax: "<<argv[0]<<"<Number of Districts> <Population Data>"<<std::endl;
+    cout<<"Syntax: "<<argv[0]<<" <Number of Districts> <Population Data>"<<std::endl;
     return -1;
   }
 
