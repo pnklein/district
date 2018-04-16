@@ -29,6 +29,13 @@ int main(int argc, char *argv[]){
     }
   }
 
+  //Shuffle centers
+  for(unsigned int i=0;i<clients.size()-2;i++){
+    const int j = uniform_rand_int(i,clients.size()-1);
+    std::swap(clients[i], clients[j]);
+    std::swap(populations_vec[i], populations_vec[j]);
+  }
+
   std::vector<Point> centers;
   Assignment assignment;
   std::vector<double> weights;

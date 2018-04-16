@@ -4,6 +4,7 @@
 #include "initial_centers.hpp"
 #include "rand_float.hpp"
 #include "rand_point.hpp"
+#include "random.hpp"
 
 std::vector<Point> choose_initial_centers(
   const std::vector<Point> &clients, 
