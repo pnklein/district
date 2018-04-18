@@ -1,0 +1,4 @@
+*.o
+do_redistrict
+out_*
+*.exe

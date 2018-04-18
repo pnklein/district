@@ -8,4 +8,4 @@
 using namespace std;
 
 
-tuple<vector<Point>, Assignment, vector<double> > choose_centers(const vector<Point> &clients, long * populations, int num_centers);
+void choose_centers(const vector<Point> &clients, long * populations, int num_centers, std::vector<Point> &centers, Assignment &assignment, std::vector<double> &weights);

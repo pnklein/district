@@ -11,6 +11,7 @@
 #include <string.h>
 #include <assert.h>
 #include "check_weights.hpp"
+#include <limits>
 
 //#include <values.h>
 
@@ -506,75 +507,67 @@ i -> rank = -1;
 
 /*************************************************** price_update *******/
 
-void  price_update ()
+void  price_update (){
+  register node   *i;
 
-{
+  excess_t remain;               /* total excess of unscanned nodes with
+                                    positive excess */
+  bucket *b;                     /* current bucket */
+  price_t dp;                    /* amount to be subtracted from prices */
 
-register node   *i;
+  n_update ++;
 
-excess_t remain;               /* total excess of unscanned nodes with
-                                  positive excess */
-bucket *b;                     /* current bucket */
-price_t dp;                    /* amount to be subtracted from prices */
-
-n_update ++;
-
-FOR_ALL_NODES_i 
-  {
-
-    if ( i -> excess < 0 )
-      {
-	INSERT_TO_BUCKET ( i, buckets );
-	i -> rank = 0;
-      }
-    else
-      {
-        i -> rank = linf;
-      }
+  FOR_ALL_NODES_i {
+    if ( i -> excess < 0 ){
+      INSERT_TO_BUCKET ( i, buckets );
+      i -> rank = 0;
+    } else {
+      i -> rank = linf;
+    }
   }
 
-remain = total_excess;
-if ( remain < 0.5 ) return;
+  remain = total_excess;
+  if ( remain < 0.5 ) return;
 
-/* main loop */
+  /* main loop */
 
-for ( b = buckets; b != l_bucket; b ++ )
+  for ( b = buckets; b != l_bucket; b ++ )
   {
 
     while ( NONEMPTY_BUCKET ( b ) )
-       {
-	 GET_FROM_BUCKET ( i, b )
+    {
+      GET_FROM_BUCKET ( i, b )
 
-	 up_node_scan ( i );
+      up_node_scan ( i );
 
-	 if ( i -> excess > 0 )
-	   {
-	     remain -= (i -> excess);
-             if ( remain <= 0  ) break; 
-	   }
+      if ( i -> excess > 0 )
+      {
+        remain -= (i -> excess);
+        if ( remain <= 0  ) break; 
+      }
 
-       } /* end of scanning the bucket */
+    } /* end of scanning the bucket */
 
     if ( remain <= 0  ) break; 
   } /* end of scanning buckets */
 
-if ( remain > 0.5 ) flag_updt = 1;
+  if ( remain > 0.5 ) flag_updt = 1;
 
 /* finishup */
 /* changing prices for nodes which were not scanned during main loop */
 
-dp = ( b - buckets ) * epsilon;
+  dp = ( b - buckets ) * epsilon;
 
-FOR_ALL_NODES_i 
+  FOR_ALL_NODES_i 
   {
 
     if ( i -> rank >= 0 )
     {
       if ( i -> rank < linf )
-	REMOVE_FROM_BUCKET ( i, (buckets + i -> rank) );
+        REMOVE_FROM_BUCKET ( i, (buckets + i -> rank) );
 
       if ( i -> price > price_min )
-	i -> price -= dp;
+        i -> price -= dp;
     }
   }
 
@@ -876,13 +869,7 @@ void refine ()
 node     *i;      /* current node */
 excess_t i_exc;   /* excess of  i  */
 
-long   np, nr, ns;  /* variables for additional print */
-
 int    pr_in_int;   /* current number of updates between price_in */
-
-np = n_push; 
-nr = n_relabel; 
-ns = n_scan;
 
 n_refine ++;
 n_ref ++;

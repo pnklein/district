@@ -1,11 +1,8 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import sys
 import scipy.spatial as sp
 import shapely.geometry as sg
-from matplotlib import colors as mcolors
-color_dict = dict(mcolors.BASE_COLORS, **mcolors.CSS4_COLORS)
-# colors = [x for x in color_dict if x not in {"w",'aliceblue','antiquewhite','azure','beige','bisque','blanchedalmond'}]
+
 colors = [
 'red',                #ff0000 = 255   0   0
 'web-green',          #00c000 =   0 192   0
@@ -139,8 +136,6 @@ def PlotAll(C, A, assignment, bounded_regions, bbox, output):
         f.write("\n") #x, y, color = 'black')
     Plot_extra_lines(C, f)
     f.close()
-    # plt.axis([bbox[0][0],bbox[1][0], bbox[0][1],bbox[1][1]])
-    # plt.show(block=True)
 
 
 
@@ -200,20 +195,12 @@ def find_proj(bounded_regions):
                 proj_regions[i].append(proj_point)
     return proj_regions
 
-def plot_regions(proj_regions):
-
-    for r in proj_regions:
-        if proj_regions[r] == []: continue
-        region = proj_regions[r]
-        convex_hull = sg.MultiPoint(region).convex_hull
-        x,y = convex_hull.exterior.xy
-        plt.plot(x, y, color = 'black')
 
 
 def Plot_extra_lines(C,f):
     diagram = sp.Voronoi(C)
-    
-    
+
+
 
 def unbounded(input_region): return any(x==-1 for x in input_region)
 ## insert points to remove
