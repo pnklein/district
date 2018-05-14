@@ -72,11 +72,7 @@ colors = [
 'orchid4',            #804080 = 128  64 128
 'mediumpurple3'      #8060c0 = 128  96 192
     ]
-
-    
-
-        
-        
+ 
 def Parse(filename):
     f = open(filename, "r")
     lines = f.readlines()
@@ -182,11 +178,11 @@ def EuclidExample2(ncenters):
     # return sp.Voronoi(C)
 
 def find_proj(bounded_regions):
-    proj_regions = {}
+    proj_regions = []
     # print(bounded_regions)
     for i in range(len(bounded_regions)):
         region = bounded_regions[i]
-        proj_regions[i] = []
+        proj_regions.append([])
         for p1 in region:
             if p1[2] < 0: continue
             for p2 in region:
@@ -201,25 +197,40 @@ def find_proj(bounded_regions):
     return proj_regions
 
 def plot_regions(proj_regions):
-
     for r in proj_regions:
         if proj_regions[r] == []: continue
-        region = proj_regions[r]
-        convex_hull = sg.MultiPoint(region).convex_hull
-        x,y = convex_hull.exterior.xy
+        x,y = proj_regions[r].exterior.xy
         plt.plot(x, y, color = 'black')
-
 
 def Plot_extra_lines(C,f):
     diagram = sp.Voronoi(C)
     
-    
-
 def unbounded(input_region): return any(x==-1 for x in input_region)
 ## insert points to remove
 ## infinite regions
 
 def plot_helper(C_3D, A, assign_pairs,bbox, outputfile):
+    # C = [[p[0],p[1]] for p in C_3D]
+    # # bbox = find_bounding_box(C_3D)
+    # minpt, maxpt = bbox
+    # extent = find_extent([minpt,maxpt])
+    # smallpt, bigpt = [minpt[i]-extent[i] for i in range(3)], [maxpt[i]+extent[i] for i in range(3)]
+    # boundary = np.array([smallpt, [bigpt[0],smallpt[1],smallpt[2]],
+    #                  [smallpt[0],bigpt[1],smallpt[2]],
+    #                  [smallpt[0],smallpt[1],bigpt[2]],
+    #                  [bigpt[0],bigpt[1],smallpt[2]],
+    #                  [smallpt[0],bigpt[1],bigpt[2]],
+    #                  [bigpt[0],smallpt[1],bigpt[2]],
+    #                  bigpt])
+    # diagram = sp.Voronoi(np.concatenate((C_3D,boundary)))
+    # bounded_regions = [[diagram.vertices[j] for j in region]
+    #                    for region in diagram.regions
+    #                    if region != [] and not unbounded(region)]
+    # proj_regions = find_proj(bounded_regions)
+    regions = power_cells(C_3D, bbox)
+    PlotAll(C,A,assign_pairs, regions, bbox, outputfile)
+
+def power_cells(C_3D, bbox):
     C = [[p[0],p[1]] for p in C_3D]
     # bbox = find_bounding_box(C_3D)
     minpt, maxpt = bbox
@@ -237,7 +248,7 @@ def plot_helper(C_3D, A, assign_pairs,bbox, outputfile):
                        for region in diagram.regions
                        if region != [] and not unbounded(region)]
     proj_regions = find_proj(bounded_regions)
-    PlotAll(C,A,assign_pairs, proj_regions, bbox, outputfile)
+    return [sg.MultiPoint(region).convex_hull for region in proj_regions]
 
 
 if __name__ == '__main__':
