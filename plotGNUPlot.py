@@ -5,6 +5,7 @@ import scipy.spatial as sp
 import shapely.geometry as sg
 from shapely.geometry.polygon import Polygon
 from matplotlib import colors as mcolors
+import "Voronoi_boundaries" as vb
 
 colors = [
 'red',                #ff0000 = 255   0   0

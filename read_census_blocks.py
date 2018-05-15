@@ -23,5 +23,16 @@ def write_client_file(input_filename, output_filename):
             of.write(str(cent.x)+" "+str(cent.y)+" "+str(pop)+"\n")
 
 
+def read_client_file(client_filename):
+    A = []
+    sf = shapefile.Reader(input_filename)
+    for shape_rec in sf.iterShapeRecords():
+        pop = shape_rec.record[7]
+        if pop > 0:
+            cent = shape(shape_rec.shape).centroid
+            A.append([float(cent.x), float(cent.y), float(pop)])
+            # of.write(str(cent.x)+" "+str(cent.y)+" "+str(pop)+"\n")
+    return A  
+            
 import sys
 write_client_file(sys.argv[1],sys.argv[2])
