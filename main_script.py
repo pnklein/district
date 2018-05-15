@@ -13,7 +13,7 @@ if __name__ == '__main__':
         print("Use: ", sys.argv[0], "[file name] [state shape file name] [output file name]")
         exit(-1)
     C_3D, A, assign_pairs, bbox = vb.Parse(sys.argv[1])
-    power_cells = vb.get_all_power_cells(sys.argv[1])
+    power_cells = vb.power_cells_fromfile(sys.argv[1])
     mplot.plot_helperVoronoi(C_3D, A, assign_pairs, bbox,
                              sys.argv[3]+"voronoi")
     mplot.plot_helperGNUplot(C_3D, A, power_cells, bbox, sys.argv[2],

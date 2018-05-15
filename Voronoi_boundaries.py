@@ -89,7 +89,7 @@ def power_cells(C_3D, bbox):
     return [sg.MultiPoint(region).convex_hull for region in proj_regions
             if region != []]
 
-def get_all_power_cells(filename):
+def power_cells_fromfile(filename):
     C_3D, A, assign_pairs, bbox = Parse(filename)
     return power_cells(C_3D, bbox)
 
