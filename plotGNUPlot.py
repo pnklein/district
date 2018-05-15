@@ -264,6 +264,7 @@ def GNUplot(C, A, boundary, polygons, non_clipped,
     f.write("set key off\n")
     f.write("set terminal pdf enhanced\n")
     f.write("set output '"+outputfilename+".pdf'\n")
+    f.write("set size square\n")
     f.write("plot x lc rgb 'white'\n")
     # f.write("pause -1\n")
     f.close()
