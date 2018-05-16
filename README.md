@@ -54,7 +54,37 @@ when it terminates, sends the output to standard out.
 Standard out should be piped into a file
 
 Next, use
-   python3 Voronoi_boundaries.py <input filename> <output filename>
+   python3 main_script.py <input filename> <state shape filename> <output filename>
+   where <input filename> is an output of the do_redistricting program, the <state shape filename>
+   is an output of the read_state_shapefile.py script and <output filename> is a gnuplot program.
+   It produces a file that 
+   the client points, with colors reflecting the assignment to
+   centers, and the boundaries of the convex polygons that form the
+   power diagram of the chosen centers.
+
+Next, use
+   gnuplot <input filename> to obtain a pdf file consisting of the
+   redistricting of the region, where <input filename> is the output of
+   the main_script script.
+
+
+
+
+Other tools:
+
+Function power_cells_fromfile(filename) takes
+as input an output a file in the format of the output of 
+do_redistrict and returns the list of polygons forming the cells of
+the Voronoi diagram induced by the centers.
+
+Similarly, Function power_cells(C_3D, bbox) takes a set
+of centers and a bounding box and returns the list of polygons
+forming the cells of the Voronoi diagram induced by C_3D that fits
+into the bounding box bb
+
+Function plot_helperVoronoi outputs a file that contains the clients
+and their assignments and with the polygons output by power_cells.
+Format of the file output is:
 to produce a file that specifies:
    the client points, with colors reflecting the assignment to
    centers, and the boundaries of the convex polygons that form the
@@ -73,29 +103,18 @@ Format:
       .
       <x> <y> <x> <y> ... <x> <y> 
 
-Next, use
-  python3 plotGNUPlot.py <input filename> <boundary filename> <output  GNUplot file>
-where <boundary filename> is the name of a file specifying the
-  boundaries of the state, given in the format
-    <x> <y>
-    <x> <y>
-    .
-    .
-    <empty line>
-    <x> <y>
-    <x> <y>
-    .
-    .
-   <empty line>
-    <x> <y>
-    <x> <y>
-    .
-    .
 
-where each sequence of x-y lines specifes the coordinates of polygon
-vertices of some polygon that is part of the boundary of the state.
 
-The output is a file with gnuplot commands.  Running gnuplot on that
-file shows the client points according to the color assignment, and
+Function plot_helperGNUplot outputs a gnuplot script from
+given the polygons, the bounding box, the shape of the state (used
+to clip the polygons to the shape of the state) and displays the
+clients (a.k.a. census blocks) or not depending on last argument.
+Running gnuplot on that file shows the client points according
+to the color assignment, and
 also the state boundaries, and also the boundaries of the
 power-diagram cells (clipped against the state boundaries).
+
+
+Function plot_helperGNUplot_fromfile does the same thing than
+the plot_helperGNUplot but takes as input a file in the format
+of the file output by plot_helperVoronoi.
