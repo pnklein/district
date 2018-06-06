@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Main</title>
+	<link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+</head>
+<body>
+	<div id='map' class='map'>
+	Hello world
+	</div>
+	<script>
+		//alert('hello');
+		$(document).ready(function(){
+			$.get('/state/RI', function(data, status){
+				var stateData = JSON.parse(data);
+
+				createmap(stateData.type, stateData.coordinates);
+				console.log(status);
+			})
+
+			function createmap(type, coords) {
+				var polyfeature = new ol.Feature({});
+
+
+
+				if (type == 'Polygon'){
+					var geometry = new ol.geom.Polygon(coords);
+					geometry.transform('EPSG:4326', 'EPSG:3857');
+
+					polyfeature.setGeometry(geometry);
+				}
+				else if (type == 'MultiPolygon'){
+					var geometry = new ol.geom.MultiPolygon(coords);
+					geometry.transform('EPSG:4326', 'EPSG:3857');
+					polyfeature.setGeometry(geometry);
+				}
+
+				var layer = new ol.layer.Vector({
+				    source: new ol.source.Vector({
+				        features: [polyfeature]
+				    }),
+				    style: new ol.style.Style({
+				    	stroke: new ol.style.Stroke({
+				    		width: 3,
+				    		color: 'black'
+				    	}),
+				    	fill: new ol.style.Fill({
+				    		color: 'white'
+				    	})
+				    }),
+				    opacity: 0.5
+				})
+
+				console.log(coords[6][0].length)
+
+				var districts = makeDistricts(coords[6][0].map(coord => ol.proj.fromLonLat(coord)));
+
+				var babyfeature = new ol.Feature({});
+				var centerPt = [-71.576667, 41.671667];
+
+				var border = coords[0][0];
+				var geom = new ol.geom.Polygon([border]);
+				geom.transform('EPSG:4326', 'EPSG:3857');
+
+				babyfeature.setGeometry(geom);
+
+				var babylayer = new ol.layer.Vector({
+				    source: new ol.source.Vector({
+				        features: [babyfeature]
+				    }),
+				    style: new ol.style.Style({
+				    	stroke: new ol.style.Stroke({
+				    		width: 3,
+				    		color: 'black'
+				    	}),
+				    	fill: new ol.style.Fill({
+				    		color: 'red'
+				    	})
+				    }),
+				    opacity: 0.5
+				})
+
+				var point = new ol.layer.Vector({
+					source: new ol.source.Vector({
+				        features: [new ol.Feature({
+				        	geometry: new ol.geom.Point([-71.576667, 41.671667])
+				        })]
+				    }),
+				    style: new ol.style.Style({
+				    	stroke: new ol.style.Stroke({
+				    		width: 5,
+				    		color: 'black'
+				    	})
+				    }),
+				    opacity: 0.5
+				})
+
+
+				var osm = new ol.layer.Tile({
+					source: new ol.source.OSM(),
+					opacity: 0.75
+				})
+
+
+				var map = new ol.Map({
+					target: 'map',
+		        	layers: [osm, layer, point, babylayer].concat(districts),
+		        	view: new ol.View({
+		        		center: ol.proj.fromLonLat([-71.576667, 41.671667]),
+		          		zoom: 9
+		        	})
+		      	});
+
+			}
+
+			function makeDistricts(coords){
+
+				var centerPt = [-71.576667, 41.671667];
+				var somePts = [centerPt, [-71.523400, 41.671667], [-71.523400, 41.641667], [-71.576667, 41.641667]].map(coord => ol.proj.fromLonLat(coord));
+
+				var borderSegs = [coords.slice(0,41), coords.slice(40,82), coords.slice(81,123), coords.slice(122,166).concat([coords[0]])];
+
+				console.log(borderSegs);
+
+				var districts = [];
+
+				for (var i in borderSegs){
+
+					var j = 1 + parseInt(i);
+
+					console.log(i, j);
+
+					var vector = new ol.layer.Vector({
+				    	source: new ol.source.Vector({
+				        	features: [new ol.Feature({
+				        		geometry: new ol.geom.Polygon([borderSegs[i].concat([somePts[j%4], somePts[i]])])
+				        	})]
+				    	}),
+				    	style: new ol.style.Style({
+				    		stroke: new ol.style.Stroke({
+				    			width: 1,
+				    			color: 'black'
+				    		}),
+				    		fill: new ol.style.Fill({
+				    			color: getRandomColor().toString()
+				    		})
+				    	}),
+				    	opacity: 0.5
+					});
+
+					districts.push(vector);
+				}
+
+				var middlePoly = new ol.layer.Vector({
+				    	source: new ol.source.Vector({
+				        	features: [new ol.Feature({
+				        		geometry: new ol.geom.Polygon([somePts])
+				        	})]
+				    	}),
+				    	style: new ol.style.Style({
+				    		stroke: new ol.style.Stroke({
+				    			width: 1,
+				    			color: 'black'
+				    		}),
+				    		fill: new ol.style.Fill({
+				    			color: getRandomColor().toString()
+				    		})
+				    	}),
+				    	opacity: 0.5
+					});
+				districts.push(middlePoly);
+
+				return districts;
+			}
+
+
+			//https://stackoverflow.com/questions/1484506/random-color-generator
+			function getRandomColor() {
+  				var letters = '0123456789ABCDEF';
+  				var color = '#';
+  				for (var i = 0; i < 6; i++) {
+    				color += letters[Math.floor(Math.random() * 16)];
+  				}
+  				return color;
+			}
+
+
+		   
+		});
+	</script>
+
+</body>
+</html>
